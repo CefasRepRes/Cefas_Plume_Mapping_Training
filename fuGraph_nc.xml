@@ -1,0 +1,98 @@
+<!--
+> This graph is to:
+1. Clip the area of interest - please change the <geoRegion> coordinates
+2. Run FU Classification algorithm using specific water quality and scientific flags
+3. Subset the output to conatin only the FU layer and latitude and longitude
+4. Export as a netCDF file with assignes projected coordinate system
+-->
+
+<graph id="Graph">
+  <version>1.0</version>
+  <node id="Subset_spatially">
+        <operator>Subset</operator>
+        <sources>
+        <sourceProduct>${sourceProduct}</sourceProduct>
+      </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <sourceBands></sourceBands>
+            <region></region>
+            <geoRegion>POLYGON((75 2.5,99 2.5,99 24,75 24,75 2.5))</geoRegion>
+            <subSamplingX>1</subSamplingX>
+            <subSamplingY>1</subSamplingY>
+            <fullSwath>false</fullSwath>
+            <tiePointGridNames/>
+            <copyMetadata>true</copyMetadata>
+        </parameters>
+    </node>	
+  <node id="fuNode">
+      <operator>FuClassification</operator>
+      <sources>
+      <sourceProduct>Subset_spatially</sourceProduct>
+    </sources>
+      <parameters>
+          <copyAllSourceBands>false</copyAllSourceBands>
+          <inputIsIrradianceReflectance>false</inputIsIrradianceReflectance>
+          <validExpression>WQSF_lsb.WATER or WQSF_lsb.INLAND_WATER</validExpression>
+          <reflectanceNamePattern/>
+          <instrument>OLCI</instrument>
+          <includeIntermediateResults>false</includeIntermediateResults>
+      </parameters> 
+    </node> 
+  <node id="Reproject">
+    <operator>Reproject</operator>
+    <sources>
+      <sourceProduct>fuNode</sourceProduct>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <wktFile/>
+      <crs>GEOGCS[&quot;GCS_WGS_1984&quot;, &#xd;
+  DATUM[&quot;D_WGS_1984&quot;, &#xd;
+    SPHEROID[&quot;WGS_1984&quot;, 6378137.0, 298.257223563]], &#xd;
+  PRIMEM[&quot;Greenwich&quot;, 0.0], &#xd;
+  UNIT[&quot;degree&quot;, 0.017453292519943295], &#xd;
+  AXIS[&quot;Geodetic longitude&quot;, EAST], &#xd;
+  AXIS[&quot;Geodetic latitude&quot;, NORTH]]</crs>
+      <resampling>Nearest</resampling>
+      <referencePixelX/>
+      <referencePixelY/>
+      <easting/>
+      <northing/>
+      <orientation/>
+      <pixelSizeX/>
+      <pixelSizeY/>
+      <width/>
+      <height/>
+      <tileSizeX/>
+      <tileSizeY/>
+      <orthorectify>false</orthorectify>
+      <elevationModelName/>
+      <noDataValue>NaN</noDataValue>
+      <includeTiePointGrids>true</includeTiePointGrids>
+      <addDeltaBands>false</addDeltaBands>
+    </parameters>
+  </node>
+  <node id="BandSelect">
+    <operator>BandSelect</operator>
+    <sources>
+      <sourceProduct>Reproject</sourceProduct>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <selectedPolarisations/>
+      <sourceBands>FU,TP_longitude,TP_latitude</sourceBands>
+      <bandNamePattern/>
+    </parameters>
+  </node>
+  <node id="writenc">
+      <operator>Write</operator>
+      <sources>
+        <source>BandSelect</source>
+      </sources>
+      <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+        <file>${out}</file>
+        <formatName>NetCDF4-CF</formatName>
+        <deleteOutputOnFailure>true</deleteOutputOnFailure>
+        <writeEntireTileRows>true</writeEntireTileRows>
+        <clearCacheAfterRowWrite>false</clearCacheAfterRowWrite>
+      </parameters>
+    </node>
+</graph>
