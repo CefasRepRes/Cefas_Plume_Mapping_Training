@@ -25,6 +25,8 @@ https://github.com/jobel-openscience/FUME/blob/master/forel_ule_OLCI.ipynb
 
 https://github.com/jobel-openscience/FUME/blob/master/forel_ule_tutorial.ipynb
 
+According to various studies such as, [citclops](http://www.citclops.eu/home) or the [GBR studies](https://pubmed.ncbi.nlm.nih.gov/31352278/), Forel-Ule value of greater or equalt to 10 is used as cut-off point for mapping the river plume. Having said that, this might change in your local area of interest, and therefore it is recommended to analyse Forel-Ule in conjuction with the water quality parameters, such as nutrients, turbidity, suspended particulate matter or chlorophyll.
+
 
 ### Authors:
 1. Lenka Fronkova
