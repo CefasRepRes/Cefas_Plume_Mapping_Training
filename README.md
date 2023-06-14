@@ -14,15 +14,15 @@ product ID. The script runs in conjunction with the [data store login script](ht
 This script creates a command line string which uses the GPT JAVA functions that are automatically installed with the SNAP installation. The Python script calls the [fuGraph_nc.xml](https://github.com/CefasRepRes/Cefas_Plume_Mapping_Training/blob/main/fuGraph_nc.xml) that contains the specific SNAP GPT functions, namely subsetting geogrpahically,
 calculating the Forel-Ule classes and exporting Forel-Ule, Latitute and Longitude as georeferenced netCDF file.
 
-### 4. [FUME repository](https://github.com/tiagoams/FUME)
+### 4. [FUME repository](https://github.com/CefasRepRes/FUME)
 
 This repository contains Python open-source version of the Forel Ule Classification algorithm. We would recommend looking at the Test_FU_images notebook, where Polymer atmospheric correction is compared to the baseline EUMETSAT atmospheric correctionn. The advantage of downloading L1 image and applying Polymer atmospheric correction is that is a suitable method for medium turbid waters unlike ESA's Baseline Atmospheric Correction distributed through EUMETSAT. These scripts could be used as an alternative to the SNAP FU Classification tool.
 
-https://github.com/tiagoams/FUME/blob/master/fume.py
+https://github.com/CefasRepRes/FUME/blob/master/fume.py
 
-https://github.com/tiagoams/FUME/blob/master/Test_FU.ipynb
+https://github.com/CefasRepRes/FUME/blob/master/Test_FU.ipynb
 
-https://github.com/tiagoams/FUME/blob/master/Test_FU_images.ipynb
+https://github.com/CefasRepRes/FUME/blob/master/Test_FU_images.ipynb
 
 According to various studies such as, [citclops](http://www.citclops.eu/home) or the [GBR studies](https://pubmed.ncbi.nlm.nih.gov/31352278/), Forel-Ule value of greater or equalt to 10 is used as cut-off point for mapping the river plume. Having said that, this might change in your local area of interest, and therefore it is recommended to analyse Forel-Ule in conjuction with the water quality parameters, such as nutrients, turbidity, suspended particulate matter or chlorophyll.
 
