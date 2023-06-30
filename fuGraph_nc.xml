@@ -32,7 +32,7 @@
       <parameters>
           <copyAllSourceBands>false</copyAllSourceBands>
           <inputIsIrradianceReflectance>false</inputIsIrradianceReflectance>
-          <validExpression>WQSF_lsb.WATER or WQSF_lsb.INLAND_WATER</validExpression>
+          <validExpression>not WQSF_lsb.CLOUD_AMBIGUOUS or WQSF_lsb.CLOUD_MARGIN or WQSF_lsb.CLOUD or WQSF_lsb.INVALID and WQSF_lsb.WATER and WQSF_lsb.INLAND_WATER</validExpression>
           <reflectanceNamePattern/>
           <instrument>OLCI</instrument>
           <includeIntermediateResults>false</includeIntermediateResults>
